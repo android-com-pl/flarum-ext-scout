@@ -11,7 +11,8 @@
         "laravel/scout": "^9.4",
         "algolia/algoliasearch-client-php": "^3.2",
         "http-interop/http-factory-guzzle": "^1.0",
-        "meilisearch/meilisearch-php": "*"
+        "meilisearch/meilisearch-php": "*",
+        "matchish/laravel-scout-elasticsearch": "^7.6"
     },
     "require-dev": {
         "teamtnt/laravel-scout-tntsearch-driver": "^11.6"
@@ -50,6 +51,11 @@
             "optional-dependencies": [
                 "clarkwinkelmann/flarum-ext-advanced-search-highlight"
             ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
         }
     }
 }

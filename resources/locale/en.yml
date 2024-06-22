@@ -7,6 +7,7 @@ clarkwinkelmann-scout:
                 algolia: Algolia
                 meilisearch: Meilisearch
                 tntsearch: TNTSearch
+                elasticsearch: Elasticsearch
             prefix: Index name prefix (optional)
             queue: Process index updates in queue
             queueHelp: This setting only has effect if an asynchronous queue driver is configured in Flarum.
@@ -34,3 +35,7 @@ clarkwinkelmann-scout:
             tntsearchFuzzyDistance: TNT Search Fuzziness Levenshtein Distance (optional)
             tntsearchFuzzyPrefixLength: TNT Search Fuzziness Prefix Length (optional)
             tntsearchFuzzyMaxExpansions: TNT Search Fuzziness Max Expansions (optional)
+            elasticsearchHosts: Elasticsearch Host
+            elasticsearchHostsHelp: You can use commas as separator for additional nodes.
+            elasticsearchUser: Elasticsearch User
+            elasticsearchPassword: Elasticsearch Password

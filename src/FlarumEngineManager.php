@@ -5,12 +5,15 @@ namespace ClarkWinkelmann\Scout;
 use Algolia\AlgoliaSearch\Config\SearchConfig;
 use Algolia\AlgoliaSearch\SearchClient as Algolia;
 use Algolia\AlgoliaSearch\Support\UserAgent;
+use Elastic\Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\Exception\AuthenticationException;
 use Exception;
 use Flarum\Foundation\Paths;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Database\ConnectionInterface;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\AlgoliaEngine;
+use Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine;
 use TeamTNT\Scout\Engines\TNTSearchEngine;
 use TeamTNT\TNTSearch\TNTSearch;
 
@@ -86,6 +89,33 @@ class FlarumEngineManager extends EngineManager
         $tnt->asYouType = true;
 
         return new TNTSearchEngine($tnt);
+    }
+
+    /**
+     * @throws AuthenticationException
+     */
+    public function createElasticsearchDriver(): ElasticSearchEngine
+    {
+        /**
+         * @var SettingsRepositoryInterface $settings
+         */
+        $settings = resolve(SettingsRepositoryInterface::class);
+
+        $hosts = $settings->get('clarkwinkelmann-scout.elasticsearch.hosts') ?: [];
+        if(is_string($hosts)){
+            $hosts = explode(',', $hosts);
+        }
+
+        $clientBuilder = ClientBuilder::create()->setHosts($hosts);
+
+        $user = $settings->get('clarkwinkelmann-scout.elasticsearch.user');
+        $password = $settings->get('clarkwinkelmann-scout.elasticsearch.password');
+
+        if(!empty($user) && !empty($password)){
+            $clientBuilder->setBasicAuthentication($user, $password);
+        }
+
+        return new ElasticSearchEngine($clientBuilder->build());
     }
 
     /**

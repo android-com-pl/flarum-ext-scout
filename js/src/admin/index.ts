@@ -10,6 +10,7 @@ app.initializers.add('clarkwinkelmann-scout', () => {
                 algolia: app.translator.trans('clarkwinkelmann-scout.admin.setting.driverOption.algolia'),
                 meilisearch: app.translator.trans('clarkwinkelmann-scout.admin.setting.driverOption.meilisearch'),
                 tntsearch: app.translator.trans('clarkwinkelmann-scout.admin.setting.driverOption.tntsearch'),
+                elasticsearch: app.translator.trans('clarkwinkelmann-scout.admin.setting.driverOption.elasticsearch'),
             },
             default: 'null',
             label: app.translator.trans('clarkwinkelmann-scout.admin.setting.driver'),
@@ -103,5 +104,22 @@ app.initializers.add('clarkwinkelmann-scout', () => {
             setting: 'clarkwinkelmann-scout.tntsearchFuzzyMaxExpansions',
             label: app.translator.trans('clarkwinkelmann-scout.admin.setting.tntsearchFuzzyMaxExpansions'),
             placeholder: '2',
+        })
+        .registerSetting({
+            type: 'text',
+            setting: 'clarkwinkelmann-scout.elasticsearch.hosts',
+            label: app.translator.trans('clarkwinkelmann-scout.admin.setting.elasticsearchHosts'),
+            help: app.translator.trans('clarkwinkelmann-scout.admin.setting.elasticsearchHostsHelp'),
+            placeholder: 'localhost:9200',
+        })
+        .registerSetting({
+            type: 'text',
+            setting: 'clarkwinkelmann-scout.elasticsearch.user',
+            label: app.translator.trans('clarkwinkelmann-scout.admin.setting.elasticsearchUser'),
+        })
+        .registerSetting({
+            type: 'password',
+            setting: 'clarkwinkelmann-scout.elasticsearch.password',
+            label: app.translator.trans('clarkwinkelmann-scout.admin.setting.elasticsearchPassword'),
         });
 });
