@@ -92,10 +92,18 @@ return [
     // Natively we only index comments, but an extension could make more posts searchable so this code is nicely isolated in anticipation for that
     (new ScoutExtend(CommentPost::class))
         ->attributes(function (CommentPost $post): array {
-            return [
+            $content = null;
+
+            try {
                 // We use the rendered version and not unparsed version as the unparsed version might expose original text that's hidden by extensions in the output
                 // strip_tags is used to strip HTML tags and their properties from the index but not provide any additional security
-                'content' => strip_tags($post->formatContent()),
+                $content = strip_tags($post->formatContent());
+            } catch (\Exception $exception){
+                // Skip corrupted posts
+            }
+
+            return [
+                'content' => $content,
             ];
         }),
     (new ScoutExtend(User::class))
