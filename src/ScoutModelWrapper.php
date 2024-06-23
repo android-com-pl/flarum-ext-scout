@@ -16,13 +16,11 @@ class ScoutModelWrapper extends Model
 
     protected $realModel;
 
-    public function __construct(Model $realModel = null)
+    public function __construct(Model $realModel)
     {
         parent::__construct([]);
 
-        if($realModel) {
-            $this->realModel = $realModel;
-        }
+        $this->realModel = $realModel;
     }
 
     public function getRealModel(): Model
