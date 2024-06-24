@@ -23,15 +23,6 @@ class ScoutModelWrapper extends Model
         $this->realModel = $realModel;
     }
 
-    public static function __callStatic($method, $parameters)
-    {
-        if ($method === 'usesSoftDelete') {
-            return self::usesSoftDelete();
-        }
-
-        return (new static)->$method(...$parameters);
-    }
-
     public function getRealModel(): Model
     {
         return $this->realModel;
@@ -209,7 +200,7 @@ class ScoutModelWrapper extends Model
 
     protected static function usesSoftDelete()
     {
-        return false;
+        throw new \Exception('Native Laravel soft delete meta not implemented in Scout for Flarum');
     }
 
     /**
